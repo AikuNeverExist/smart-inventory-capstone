@@ -1,0 +1,591 @@
+/* ============================================================
+   ADMIN LEFT-SIDEBAR SHELL
+   Gives every admin page the same navigation layout as dashboard.
+   Loaded after ui.css and page-local styles.
+   ============================================================ */
+
+:root {
+    --admin-sidebar-width: 294px;
+    --admin-ink: #0b0b0b;
+    --admin-ink-2: #171717;
+    --admin-paper: #ffffff;
+    --admin-canvas: #f3f3f1;
+    --admin-line: #deded9;
+    --admin-line-strong: #c9c9c3;
+    --admin-muted: #73736f;
+    --admin-radius: 16px;
+}
+
+body.admin-layout {
+    min-height: 100vh !important;
+    background: var(--admin-canvas) !important;
+    color: #111 !important;
+    overflow-x: hidden;
+}
+
+/* Old page-level navbars are replaced by the unified left sidebar. */
+body.admin-layout > .navbar,
+body.admin-layout > header.navbar,
+body.admin-layout > .topbar,
+body.admin-layout > header.topbar {
+    display: none !important;
+}
+
+/* Shared admin sidebar */
+.admin-unified-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--admin-sidebar-width);
+    z-index: 4000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--admin-ink);
+    color: #fff;
+    border-right: 1px solid #242424;
+    scrollbar-width: thin;
+    scrollbar-color: #343434 transparent;
+}
+
+.admin-unified-sidebar::-webkit-scrollbar { width: 5px; }
+.admin-unified-sidebar::-webkit-scrollbar-thumb {
+    background: #343434;
+    border-radius: 999px;
+}
+
+.admin-sidebar-brand {
+    min-height: 106px;
+    padding: 22px 21px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-bottom: 1px solid #252525;
+}
+
+.admin-sidebar-brand-icon {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    border-radius: 14px;
+}
+
+.admin-sidebar-brand-icon img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: none !important;
+}
+
+.admin-sidebar-brand-copy {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+}
+
+.admin-sidebar-brand-copy strong {
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    white-space: nowrap;
+}
+
+.admin-sidebar-brand-copy span {
+    color: #999;
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+.admin-sidebar-nav {
+    padding: 17px 13px 30px;
+}
+
+.admin-sidebar-section-label {
+    padding: 15px 13px 8px;
+    color: #777;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+}
+
+.admin-sidebar-link {
+    min-height: 44px;
+    margin: 2px 0;
+    padding: 11px 13px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    color: #d8d8d8 !important;
+    text-decoration: none !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: background .16s ease, color .16s ease, border-color .16s ease, transform .16s ease;
+}
+
+.admin-sidebar-link img {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    object-fit: contain;
+    filter: invert(1);
+    opacity: .92;
+    margin: 0 !important;
+}
+
+.admin-sidebar-link:hover {
+    background: #1b1b1b;
+    color: #fff !important;
+    transform: translateX(2px);
+}
+
+.admin-sidebar-link.active {
+    background: linear-gradient(135deg, rgba(192,108,235,.30), rgba(93,240,157,.18));
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,.14);
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0,0,0,.16);
+}
+
+.admin-sidebar-link.active img {
+    filter: invert(1);
+    opacity: 1;
+}
+
+.admin-sidebar-logout {
+    margin-top: 4px;
+    color: #cfcfcf !important;
+}
+
+/* Mobile menu trigger */
+.admin-sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 4200;
+    height: 44px;
+    padding: 0 14px;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid #d2d2cd;
+    border-radius: 11px;
+    background: #fff;
+    color: #111;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(0,0,0,.10);
+}
+
+.admin-sidebar-toggle img {
+    width: 17px;
+    height: 17px;
+}
+
+.admin-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 3900;
+    background: rgba(0,0,0,.46);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+/* Move each existing page into the shared content column. */
+body.admin-layout > .container,
+body.admin-layout > main.container,
+body.admin-layout > .content,
+body.admin-layout > main.content,
+body.admin-layout > .main,
+body.admin-layout > main.main {
+    width: calc(100% - var(--admin-sidebar-width)) !important;
+    max-width: none !important;
+    min-height: 100vh;
+    margin: 0 0 0 var(--admin-sidebar-width) !important;
+    padding: 34px 36px 44px !important;
+}
+
+/* A few pages use a direct main wrapper or custom container sizing. */
+body.admin-layout .container {
+    color: #ffffff;
+}
+
+body.admin-layout .top,
+body.admin-layout .page-header,
+body.admin-layout .page-title {
+    gap: 18px;
+}
+
+body.admin-layout .top {
+    margin-bottom: 24px !important;
+}
+
+body.admin-layout .top h1,
+body.admin-layout .container > h1,
+body.admin-layout .page-header h1,
+body.admin-layout .page-title h1 {
+    color: #ffffff !important;
+    font-size: clamp(26px, 2.3vw, 34px) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.04em !important;
+    font-weight: 800 !important;
+}
+
+/* Product/supplier/user listing bars become modern panels. */
+body.admin-layout .search-box,
+body.admin-layout .filter-box {
+    padding: 16px !important;
+    margin-bottom: 18px !important;
+    border: 1px solid var(--admin-line) !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,.035) !important;
+}
+
+body.admin-layout .search-box form {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+body.admin-layout .search-box input {
+    min-width: 240px;
+    min-height: 43px;
+}
+
+body.admin-layout .search-box button {
+    min-height: 43px;
+    padding: 0 18px !important;
+    border-radius: 10px !important;
+    background: #111 !important;
+    color: #fff !important;
+    border: 1px solid #111 !important;
+    font-weight: 700;
+}
+
+/* Tables read as large dashboard cards rather than plain sheets. */
+body.admin-layout table {
+    background: #fff !important;
+}
+
+body.admin-layout > .container > table,
+body.admin-layout .table-responsive,
+body.admin-layout .table-wrap {
+    border: 1px solid var(--admin-line) !important;
+    border-radius: 15px !important;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,.035);
+}
+
+body.admin-layout th {
+    background: #f4f4f2 !important;
+    color: #696966 !important;
+    font-size: 10px !important;
+    text-transform: uppercase;
+    letter-spacing: .06em !important;
+}
+
+body.admin-layout td {
+    background: #fff;
+}
+
+body.admin-layout tbody tr:hover td {
+    background: #f8f8f6 !important;
+}
+
+/* Forms get a comfortable dashboard-card width and rhythm. */
+body.admin-layout > .container > form:not(.inline-form),
+body.admin-layout .panel form {
+    border-radius: 16px !important;
+}
+
+body.admin-layout > .container > form:not(.search-form):not(.filter-form):not(.inline-form) {
+    max-width: 900px;
+    padding: 24px !important;
+    background: #fff !important;
+    border: 1px solid var(--admin-line) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,.04) !important;
+}
+
+body.admin-layout .form-group {
+    margin-bottom: 18px !important;
+}
+
+body.admin-layout input,
+body.admin-layout select,
+body.admin-layout textarea {
+    min-height: 44px;
+}
+
+body.admin-layout textarea {
+    min-height: 110px;
+}
+
+/* Primary actions match dashboard quick actions. */
+body.admin-layout .add-btn,
+body.admin-layout .add-button,
+body.admin-layout .save,
+body.admin-layout .complete,
+body.admin-layout .filter-btn,
+body.admin-layout button[type="submit"]:not(.toggle-password) {
+    min-height: 43px;
+    padding: 0 17px !important;
+    border-radius: 10px !important;
+    background: #111 !important;
+    color: #fff !important;
+    border: 1px solid #111 !important;
+    font-weight: 750 !important;
+}
+
+body.admin-layout .add-btn:hover,
+body.admin-layout .add-button:hover,
+body.admin-layout .save:hover,
+body.admin-layout .complete:hover,
+body.admin-layout .filter-btn:hover,
+body.admin-layout button[type="submit"]:not(.toggle-password):hover {
+    background: #fff !important;
+    color: #111 !important;
+}
+
+/* Old page-level back-to-dashboard buttons are redundant with the sidebar. */
+body.admin-layout a.back-btn[href*="admin/dashboard.php"],
+body.admin-layout a.back-button[href*="admin/dashboard.php"] {
+    display: none !important;
+}
+
+/* Keep notification/error blocks monochrome and readable. */
+body.admin-layout .error,
+body.admin-layout .alert,
+body.admin-layout .message,
+body.admin-layout .success {
+    border-radius: 12px !important;
+}
+
+/* Prevent generic icon rules from inverting sidebar active icons incorrectly. */
+.admin-unified-sidebar .ui-icon { margin: 0 !important; }
+
+@media (max-width: 1180px) {
+    :root { --admin-sidebar-width: 268px; }
+    body.admin-layout > .container,
+    body.admin-layout > main.container,
+    body.admin-layout > .content,
+    body.admin-layout > main.content,
+    body.admin-layout > .main,
+    body.admin-layout > main.main {
+        padding: 28px 25px 40px !important;
+    }
+}
+
+@media (max-width: 980px) {
+    body.admin-layout {
+        padding-top: 72px !important;
+    }
+
+    .admin-sidebar-toggle {
+        display: inline-flex;
+    }
+
+    .admin-unified-sidebar {
+        width: min(294px, 88vw);
+        transform: translateX(-102%);
+        transition: transform .22s ease;
+        box-shadow: 18px 0 40px rgba(0,0,0,.18);
+    }
+
+    .admin-unified-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .admin-sidebar-overlay {
+        display: block;
+        pointer-events: none;
+    }
+
+    .admin-sidebar-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    body.admin-nav-open {
+        overflow: hidden;
+    }
+
+    body.admin-layout > .container,
+    body.admin-layout > main.container,
+    body.admin-layout > .content,
+    body.admin-layout > main.content,
+    body.admin-layout > .main,
+    body.admin-layout > main.main {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 22px 17px 36px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    body.admin-layout .top,
+    body.admin-layout .page-header,
+    body.admin-layout .page-title {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    body.admin-layout .search-box input {
+        width: 100% !important;
+        min-width: 0;
+    }
+
+    body.admin-layout .search-box button {
+        width: 100%;
+    }
+
+    body.admin-layout > .container > form:not(.search-form):not(.filter-form):not(.inline-form) {
+        padding: 18px !important;
+    }
+}
+
+@media print {
+    .admin-unified-sidebar,
+    .admin-sidebar-toggle,
+    .admin-sidebar-overlay {
+        display: none !important;
+    }
+
+    body.admin-layout {
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    body.admin-layout > .container,
+    body.admin-layout > main.container,
+    body.admin-layout > .content,
+    body.admin-layout > main.content,
+    body.admin-layout > .main,
+    body.admin-layout > main.main {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* ============================================================
+   UI/UX UPGRADE — ADMIN PROFILE + RESPONSIVE POLISH
+   ============================================================ */
+
+.admin-unified-sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-sidebar-nav {
+    flex: 1 1 auto;
+}
+
+.admin-sidebar-profile {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: auto;
+    padding: 15px 18px;
+    background: #0b0b0b;
+    border-top: 1px solid #252525;
+}
+
+.admin-sidebar-avatar {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: #fff;
+    color: #111;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.admin-sidebar-profile-copy {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+}
+
+.admin-sidebar-profile-copy strong {
+    overflow: hidden;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-sidebar-profile-copy span {
+    color: #888;
+    font-size: 10px;
+}
+
+.admin-sidebar-link {
+    min-height: 46px;
+}
+
+.admin-sidebar-link:focus-visible,
+.admin-sidebar-toggle:focus-visible {
+    outline: 3px solid #777;
+    outline-offset: 2px;
+}
+
+@media (max-width: 980px) {
+    body.admin-layout > .container,
+    body.admin-layout > main.container,
+    body.admin-layout > .content,
+    body.admin-layout > main.content,
+    body.admin-layout > .main,
+    body.admin-layout > main.main {
+        padding-top: 74px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-sidebar-toggle {
+        top: 10px;
+        left: 10px;
+        min-height: 42px;
+    }
+
+    body.admin-layout > .container,
+    body.admin-layout > main.container,
+    body.admin-layout > .content,
+    body.admin-layout > main.content,
+    body.admin-layout > .main,
+    body.admin-layout > main.main {
+        padding: 70px 14px 28px !important;
+    }
+}
+
+/* Profile pictures for the administrator sidebar. */
+.admin-sidebar-avatar {
+    overflow: hidden;
+    border-radius: 50%;
+}
+.admin-sidebar-avatar.has-photo {
+    padding: 0;
+    background: #202036;
+}
+.admin-sidebar-avatar.has-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: none !important;
+}

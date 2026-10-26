@@ -1,0 +1,98 @@
+SMART INVENTORY - USER / STAFF / SUPPLIER ROLE UPGRADE
+
+WHAT WAS ADDED
+1. Public Register page creates USER role only.
+2. Random math CAPTCHA changes on page refresh and after failed attempts.
+3. Login page now has a Register as User button.
+4. Login supports ADMIN, STAFF, USER, and SUPPLIER redirects.
+5. USER has a protected basic dashboard.
+6. Admin can edit an account and change its role to USER, STAFF, SUPPLIER, or ADMIN.
+7. Supplier is now a real login role linked to the suppliers table through suppliers.user_id.
+8. Supplier dashboard added.
+9. Supplier can view only products assigned to their Supplier profile.
+10. Supplier can add supplied stock only to their assigned products.
+11. Supplier stock additions create inventory_transactions and activity_logs.
+12. Supplier can manage their supplier contact/profile information.
+13. Supplier Management now shows Supplier accounts instead of creating plain standalone supplier records.
+14. USER and SUPPLIER accounts are blocked from Sales/POS pages.
+
+INSTALL / UPDATE STEPS
+
+STEP 1 - BACK UP YOUR CURRENT PROJECT
+Copy your current C:\xampp\htdocs\smart_inventory folder somewhere safe.
+
+STEP 2 - REPLACE THE PROJECT
+Extract the new smart_inventory folder into:
+C:\xampp\htdocs\smart_inventory\
+
+STEP 3 - UPDATE THE DATABASE
+Open:
+http://localhost/phpmyadmin/
+
+Select:
+smart_inventory_db
+
+Open the SQL tab and run/import:
+ROLE_UPGRADE_SQL.sql
+
+The SQL is designed to be safe if you already added suppliers.user_id during the earlier step.
+
+STEP 4 - START XAMPP
+Start Apache and MySQL.
+
+STEP 5 - TEST REGISTRATION
+Open:
+http://localhost/smart_inventory/register.php
+
+Create a test account. In phpMyAdmin, confirm its role is:
+user
+
+STEP 6 - TEST LOGIN
+Open:
+http://localhost/smart_inventory/login.php
+
+The login page now includes a Register as User button.
+
+STEP 7 - PROMOTE A USER TO STAFF
+Login as Admin.
+Go to Users -> Edit.
+Change Role to Staff.
+Save.
+Log out and test that account.
+
+STEP 8 - PROMOTE A USER TO SUPPLIER
+Login as Admin.
+Go to Users -> Edit.
+Change Role to Supplier.
+Save.
+A linked Supplier profile is created automatically.
+
+STEP 9 - ASSIGN PRODUCTS TO THE SUPPLIER
+As Admin, open Product Management.
+Edit a product.
+Select the Supplier account in the Supplier field.
+Save.
+
+STEP 10 - TEST SUPPLIER LOGIN
+Login using the Supplier account.
+The Supplier can:
+- View assigned products
+- Supply stock to assigned products
+- View their supply history
+- Manage supplier profile/contact information
+
+A Supplier cannot:
+- Access Admin pages
+- Access POS/Sales
+- Edit unrelated products
+- Change store selling prices
+
+ROLE REDIRECTS
+ADMIN    -> /smart_inventory/admin/dashboard.php
+STAFF    -> /smart_inventory/staff/dashboard.php
+USER     -> /smart_inventory/user/dashboard.php
+SUPPLIER -> /smart_inventory/supplier/dashboard.php
+
+IMPORTANT
+The old suppliers table is kept because products already use products.supplier_id.
+New Supplier accounts are linked using suppliers.user_id. This prevents breaking your old product relationships while changing Supplier into a real login role.

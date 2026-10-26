@@ -1,0 +1,1031 @@
+/* ============================================================
+   SMART INVENTORY — SHARED DASHBOARD AURORA BACKGROUND
+   Uses the same animated background on every visible page.
+   Palette: #c06ceb, #5df09d, #262740
+   ============================================================ */
+
+:root {
+    --dashboard-bg-deep: #090d18;
+    --dashboard-bg-mid: #101424;
+    --dashboard-bg-core: #262740;
+    --dashboard-glow-violet: #c06ceb;
+    --dashboard-glow-mint: #5df09d;
+}
+
+html {
+    min-height: 100%;
+    background:
+        radial-gradient(circle at 18% 14%, rgba(192,108,235,.22), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(93,240,157,.18), transparent 25%),
+        radial-gradient(circle at 50% 8%, rgba(38,39,64,.48), transparent 22%),
+        linear-gradient(180deg, var(--dashboard-bg-deep) 0%, var(--dashboard-bg-mid) 48%, #0c1120 100%) !important;
+    background-attachment: fixed !important;
+}
+
+body,
+body.admin-layout {
+    min-height: 100vh !important;
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 18% 14%, rgba(192,108,235,.22), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(93,240,157,.18), transparent 25%),
+        radial-gradient(circle at 50% 8%, rgba(38,39,64,.48), transparent 22%),
+        linear-gradient(180deg, var(--dashboard-bg-deep) 0%, var(--dashboard-bg-mid) 48%, #0c1120 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Shared moving violet glow */
+body::before {
+    content: "" !important;
+    position: fixed !important;
+    top: -12vw !important;
+    left: -8vw !important;
+    width: min(48vw, 660px) !important;
+    height: min(48vw, 660px) !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle,
+        rgba(192,108,235,.72) 0%,
+        rgba(192,108,235,.27) 38%,
+        transparent 70%) !important;
+    filter: blur(92px) !important;
+    opacity: .52 !important;
+    pointer-events: none !important;
+    z-index: -3 !important;
+    animation: dashboardAuroraViolet 22s ease-in-out infinite !important;
+}
+
+/* Shared moving mint glow */
+body::after {
+    content: "" !important;
+    position: fixed !important;
+    top: 16vh !important;
+    right: -11vw !important;
+    width: min(46vw, 640px) !important;
+    height: min(46vw, 640px) !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle,
+        rgba(93,240,157,.62) 0%,
+        rgba(93,240,157,.22) 36%,
+        transparent 70%) !important;
+    filter: blur(95px) !important;
+    opacity: .46 !important;
+    pointer-events: none !important;
+    z-index: -3 !important;
+    animation: dashboardAuroraMint 28s ease-in-out infinite !important;
+}
+
+/* Make page wrappers reveal the shared dashboard background. */
+.dashboard-layout,
+.main-content,
+.page-wrap,
+.page-wrapper,
+.wrapper,
+.content-wrapper,
+.container,
+.content,
+.main,
+body.admin-layout > .container,
+body.admin-layout > main.container,
+body.admin-layout > .content,
+body.admin-layout > main.content,
+body.admin-layout > .main,
+body.admin-layout > main.main {
+    background: transparent !important;
+}
+
+/* Soft #262740 center haze, matching the dashboard's middle depth. */
+.container::before,
+.content::before,
+.main::before,
+.main-content::before {
+    content: "" !important;
+    position: fixed !important;
+    left: 50% !important;
+    top: 8% !important;
+    transform: translateX(-50%) !important;
+    width: min(31vw, 430px) !important;
+    height: min(24vw, 310px) !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle,
+        rgba(38,39,64,.75) 0%,
+        rgba(38,39,64,.28) 46%,
+        transparent 76%) !important;
+    filter: blur(82px) !important;
+    opacity: .72 !important;
+    pointer-events: none !important;
+    z-index: -2 !important;
+    animation: dashboardAuroraCore 17s ease-in-out infinite !important;
+}
+
+@keyframes dashboardAuroraViolet {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    33% { transform: translate3d(5vw,4vh,0) scale(1.08); }
+    66% { transform: translate3d(-2vw,7vh,0) scale(1.03); }
+}
+
+@keyframes dashboardAuroraMint {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    35% { transform: translate3d(-5vw,3vh,0) scale(1.07); }
+    70% { transform: translate3d(2vw,7vh,0) scale(1.02); }
+}
+
+@keyframes dashboardAuroraCore {
+    0%, 100% { opacity: .62; transform: translateX(-50%) scale(1); }
+    50% { opacity: .86; transform: translateX(-50%) scale(1.12); }
+}
+
+@media (max-width: 850px) {
+    body::before,
+    body::after {
+        width: 76vw !important;
+        height: 76vw !important;
+        filter: blur(72px) !important;
+    }
+
+    .container::before,
+    .content::before,
+    .main::before,
+    .main-content::before {
+        width: 62vw !important;
+        height: 44vw !important;
+        filter: blur(64px) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before,
+    body::after,
+    .container::before,
+    .content::before,
+    .main::before,
+    .main-content::before {
+        animation: none !important;
+    }
+}
+
+@media print {
+    html,
+    body,
+    body.admin-layout {
+        background: #ffffff !important;
+    }
+
+    body::before,
+    body::after,
+    .container::before,
+    .content::before,
+    .main::before,
+    .main-content::before {
+        display: none !important;
+    }
+}
+
+
+/* ============================================================
+   DARK SURFACE + TEXT CONSISTENCY PATCH
+   Replaces leftover white cards with #202036 and keeps text readable.
+   Loaded last on visible pages.
+   ============================================================ */
+:root {
+    --dashboard-surface: #202036;
+    --dashboard-surface-2: #262740;
+    --dashboard-surface-3: #191a2d;
+    --dashboard-text: #f7f8ff;
+    --dashboard-muted: #b6bad0;
+    --dashboard-line: rgba(255,255,255,.10);
+    --dashboard-line-strong: rgba(255,255,255,.16);
+}
+
+body,
+body.admin-layout,
+.container,
+.content,
+.main,
+.main-content {
+    color: var(--dashboard-text) !important;
+}
+
+/* Main surfaces that were still white on some pages */
+.panel,
+.card,
+.stat-card,
+.summary-card,
+.analytics-card,
+.chart-card,
+.filter-box,
+.filter-panel,
+.search-box,
+.info-box,
+.quick-item,
+.receipt,
+.product-preview,
+.staff-note,
+.cart-bottom,
+.login-wrapper,
+.login-form-side,
+.alert,
+.empty-cart,
+.modal-content,
+.dropdown-menu,
+.table-card,
+.form-card,
+.content-card {
+    background: var(--dashboard-surface) !important;
+    color: var(--dashboard-text) !important;
+    border-color: var(--dashboard-line) !important;
+}
+
+.panel-header,
+.panel-footer,
+.card-header,
+.card-footer,
+.chart-header,
+.table-header,
+.filter-header {
+    background: rgba(38,39,64,.82) !important;
+    color: var(--dashboard-text) !important;
+    border-color: var(--dashboard-line) !important;
+}
+
+/* Headings and values */
+.page-header h1,
+.page-title h1,
+.welcome h1,
+.top h1,
+.container > h1,
+.container h2,
+.container h3,
+.content h1,
+.content h2,
+.content h3,
+.main h1,
+.main h2,
+.main h3,
+.panel h1,
+.panel h2,
+.panel h3,
+.card h1,
+.card h2,
+.card h3,
+.summary-card h2,
+.stat-card h2,
+.analytics-card h2,
+.info-box strong,
+.product-name,
+.recommended,
+.amount,
+.total-amount,
+.profit,
+td strong {
+    color: var(--dashboard-text) !important;
+}
+
+/* Secondary copy */
+.page-header p,
+.page-title p,
+.welcome p,
+.panel-header p,
+.card-header p,
+.summary-card span,
+.stat-label,
+.summary-label,
+.card-label,
+.preview-label,
+.stock-text,
+.empty,
+.empty-cart p,
+.staff-note,
+.info-box small,
+.muted,
+.text-muted,
+small {
+    color: var(--dashboard-muted) !important;
+}
+
+/* Tables */
+table {
+    color: var(--dashboard-text) !important;
+    background: transparent !important;
+}
+
+thead,
+th {
+    background: var(--dashboard-surface-2) !important;
+    color: #d8dbee !important;
+    border-color: var(--dashboard-line) !important;
+}
+
+td {
+    color: var(--dashboard-text) !important;
+    border-color: rgba(255,255,255,.075) !important;
+    background: transparent !important;
+}
+
+tbody tr:hover td,
+tbody tr:hover {
+    background: rgba(255,255,255,.035) !important;
+}
+
+/* Forms */
+label {
+    color: #e8eafa !important;
+}
+
+input,
+select,
+textarea {
+    background: rgba(255,255,255,.055) !important;
+    color: #ffffff !important;
+    border-color: var(--dashboard-line-strong) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,.46) !important;
+}
+
+option {
+    background: var(--dashboard-surface) !important;
+    color: #ffffff !important;
+}
+
+/* Secondary light buttons should no longer look like white blocks */
+.cancel,
+.back,
+.back-btn,
+.back-button,
+.history-btn,
+.clear,
+.action-btn,
+.view-btn,
+.edit,
+.delete,
+.remove,
+.stock-btn,
+.clear-button {
+    background: rgba(255,255,255,.07) !important;
+    color: #ffffff !important;
+    border-color: var(--dashboard-line-strong) !important;
+}
+
+.cancel:hover,
+.back:hover,
+.back-btn:hover,
+.back-button:hover,
+.history-btn:hover,
+.clear:hover,
+.action-btn:hover,
+.view-btn:hover,
+.edit:hover,
+.delete:hover,
+.remove:hover,
+.stock-btn:hover,
+.clear-button:hover {
+    background: linear-gradient(135deg, rgba(192,108,235,.24), rgba(93,240,157,.18)) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,.22) !important;
+}
+
+/* Keep direct links readable on the dark surfaces. */
+.panel a:not(.btn):not(.button):not(.action-button),
+.card a:not(.btn):not(.button):not(.action-button),
+.content a:not(.admin-sidebar-link),
+.main a:not(.admin-sidebar-link) {
+    color: #ffffff;
+}
+
+/* Login copy */
+.login-header h2,
+.login-header .small-title,
+.login-form-side label,
+.login-footer strong {
+    color: #ffffff !important;
+}
+
+.login-header p,
+.login-footer {
+    color: var(--dashboard-muted) !important;
+}
+
+
+
+/* ============================================================
+   FINAL #202036 DEFAULT-SURFACE OVERRIDE
+   Any remaining light/white UI surface is forced to the system
+   default dark surface, while text is kept readable.
+   ============================================================ */
+:root {
+    --system-default-surface: #202036;
+    --system-default-surface-2: #262740;
+    --system-default-surface-hover: #2b2b49;
+    --system-default-text: #ffffff;
+    --system-default-muted: #c0c4d8;
+}
+
+/* General page components */
+.panel,
+.card,
+.stat-card,
+.summary-card,
+.analytics-card,
+.chart-card,
+.filter-box,
+.filter-panel,
+.search-box,
+.info-box,
+.quick-item,
+.receipt,
+.product-preview,
+.staff-note,
+.cart-bottom,
+.login-wrapper,
+.login-form-side,
+.login-info,
+.alert,
+.empty-cart,
+.form-card,
+.table-card,
+.content-card,
+.widget,
+.modal,
+.modal-content,
+.dropdown-menu,
+.details-card,
+.report-card,
+.summary-box,
+.action-card,
+.form-box,
+.table-container,
+.table-wrapper,
+.login-card {
+    background: var(--system-default-surface) !important;
+    background-color: var(--system-default-surface) !important;
+    color: var(--system-default-text) !important;
+    border-color: rgba(255,255,255,.11) !important;
+}
+
+/* Headers, footers, table heads */
+.panel-header,
+.panel-footer,
+.card-header,
+.card-footer,
+.chart-header,
+.table-header,
+.filter-header,
+thead,
+th,
+tfoot,
+.cart-bottom,
+.receipt-header,
+.transaction-info,
+.receipt-footer {
+    background: var(--system-default-surface-2) !important;
+    background-color: var(--system-default-surface-2) !important;
+    color: var(--system-default-text) !important;
+    border-color: rgba(255,255,255,.10) !important;
+}
+
+/* Forms and fields */
+input,
+select,
+textarea,
+.input-wrapper,
+.form-control {
+    background: var(--system-default-surface) !important;
+    background-color: var(--system-default-surface) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,.16) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    background: var(--system-default-surface-hover) !important;
+    background-color: var(--system-default-surface-hover) !important;
+}
+
+option {
+    background: var(--system-default-surface) !important;
+    color: #ffffff !important;
+}
+
+/* Any old white secondary buttons or icon holders */
+.cancel,
+.back,
+.back-btn,
+.back-button,
+.history-btn,
+.clear,
+.clear-button,
+.action-btn,
+.action-button.secondary,
+.view-btn,
+.view-button,
+.edit,
+.delete,
+.remove,
+.stock-btn,
+.mobile-menu-btn,
+.admin-sidebar-toggle,
+.brand-icon,
+.admin-sidebar-brand-icon,
+.logo,
+.empty-icon,
+.summary-icon,
+.stat-icon,
+.card-icon,
+.quick-icon,
+.alert-icon,
+.feature-icon {
+    background: var(--system-default-surface) !important;
+    background-color: var(--system-default-surface) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,.14) !important;
+}
+
+/* Keep monochrome SVG icons visible on the dark surface */
+.brand-icon img,
+.brand-icon .ui-icon,
+.admin-sidebar-brand-icon img,
+.logo img,
+.logo .ui-icon,
+.empty-icon img,
+.empty-icon .ui-icon,
+.summary-icon img,
+.stat-icon img,
+.card-icon img,
+.quick-icon img,
+.alert-icon img,
+.feature-icon img {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Strong text correction: old black text becomes white */
+body,
+.container,
+.content,
+.main,
+.panel,
+.card,
+.stat-card,
+.summary-card,
+.analytics-card,
+.chart-card,
+.filter-box,
+.filter-panel,
+.search-box,
+.info-box,
+.quick-item,
+.receipt,
+.form-card,
+.table-card,
+.content-card,
+.modal-content {
+    color: #ffffff !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b,
+.product-name,
+.transaction,
+.cashier,
+.amount,
+.profit,
+.total-amount,
+.recommended,
+.info-value,
+.preview-value,
+td,
+td strong,
+label {
+    color: #ffffff !important;
+}
+
+p,
+small,
+.muted,
+.text-muted,
+.page-header p,
+.page-title p,
+.welcome p,
+.panel-header p,
+.card-header p,
+.chart-header p,
+.stat-label,
+.summary-label,
+.card-label,
+.preview-label,
+.stock-text,
+.empty,
+.empty-cart p,
+.staff-note,
+.info-box small {
+    color: var(--system-default-muted) !important;
+}
+
+/* Tables should never flash white */
+table,
+tbody,
+tr,
+td {
+    background-color: transparent !important;
+}
+
+tbody tr:hover,
+tbody tr:hover td {
+    background: rgba(255,255,255,.045) !important;
+}
+
+/* White active states from older CSS become aurora/dark instead */
+.navbar a.active,
+.topbar a.active,
+.nav-links a.active,
+.admin-sidebar-link.active,
+.sidebar .menu a.active {
+    background: linear-gradient(135deg, rgba(192,108,235,.30), rgba(93,240,157,.20), #202036) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,.14) !important;
+}
+
+/* Fix direct white backgrounds used by some utility blocks */
+.actions,
+.action-bar,
+.toolbar,
+.pagination,
+.pagination a,
+.pagination span,
+.search-actions,
+.filter-actions,
+.form-actions,
+.table-actions {
+    background-color: transparent !important;
+}
+
+/* Preserve print-friendly white output only when actually printing. */
+@media print {
+    html,
+    body,
+    body.admin-layout {
+        background: #ffffff !important;
+        color: #111111 !important;
+    }
+
+    .receipt,
+    .panel,
+    .card,
+    .report-card,
+    table,
+    thead,
+    th,
+    tbody,
+    tr,
+    td,
+    tfoot,
+    input,
+    select,
+    textarea {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #111111 !important;
+        box-shadow: none !important;
+    }
+
+    h1,h2,h3,h4,h5,h6,strong,b,p,small,td,th,label {
+        color: #111111 !important;
+    }
+}
+
+/* ============================================================
+   FINAL ADMIN DARK-SURFACE OVERRIDE v4
+   High-specificity patch to beat older admin_shell.css rules.
+   All screen UI surfaces use #202036 / #262740. White is reserved
+   for text and print output only.
+   ============================================================ */
+@media screen {
+    :root {
+        --final-surface: #202036;
+        --final-surface-2: #262740;
+        --final-surface-3: #191a2d;
+        --final-hover: #2c2d4a;
+        --final-text: #ffffff;
+        --final-muted: #b8bdd6;
+        --final-border: rgba(255,255,255,.11);
+        --final-border-strong: rgba(255,255,255,.18);
+    }
+
+    html body.admin-layout,
+    html body.admin-layout .container,
+    html body.admin-layout .content,
+    html body.admin-layout .main {
+        color: var(--final-text) !important;
+    }
+
+    /* Headings and readable text */
+    html body.admin-layout h1,
+    html body.admin-layout h2,
+    html body.admin-layout h3,
+    html body.admin-layout h4,
+    html body.admin-layout h5,
+    html body.admin-layout h6,
+    html body.admin-layout strong,
+    html body.admin-layout b,
+    html body.admin-layout label,
+    html body.admin-layout td,
+    html body.admin-layout td strong,
+    html body.admin-layout .transaction,
+    html body.admin-layout .cashier,
+    html body.admin-layout .amount,
+    html body.admin-layout .profit,
+    html body.admin-layout .total-amount,
+    html body.admin-layout .info-value,
+    html body.admin-layout .product-name {
+        color: #ffffff !important;
+    }
+
+    html body.admin-layout p,
+    html body.admin-layout small,
+    html body.admin-layout .muted,
+    html body.admin-layout .text-muted,
+    html body.admin-layout .page-header p,
+    html body.admin-layout .page-title p,
+    html body.admin-layout .panel-header p,
+    html body.admin-layout .card h3,
+    html body.admin-layout .today h3,
+    html body.admin-layout .empty,
+    html body.admin-layout .date,
+    html body.admin-layout .summary-label,
+    html body.admin-layout .stat-label {
+        color: var(--final-muted) !important;
+    }
+
+    /* Main cards / panels / report filters / analytics today cards */
+    html body.admin-layout .panel,
+    html body.admin-layout .card,
+    html body.admin-layout .today,
+    html body.admin-layout .today-cards .today,
+    html body.admin-layout .filter-box,
+    html body.admin-layout .filter-panel,
+    html body.admin-layout .search-box,
+    html body.admin-layout .info-box,
+    html body.admin-layout .summary-card,
+    html body.admin-layout .stat-card,
+    html body.admin-layout .analytics-card,
+    html body.admin-layout .chart-card,
+    html body.admin-layout .report-card,
+    html body.admin-layout .details-card,
+    html body.admin-layout .form-card,
+    html body.admin-layout .content-card,
+    html body.admin-layout .table-card,
+    html body.admin-layout .table-container,
+    html body.admin-layout .table-wrapper,
+    html body.admin-layout .product-preview,
+    html body.admin-layout .staff-note,
+    html body.admin-layout .cart-bottom,
+    html body.admin-layout .alert,
+    html body.admin-layout .error,
+    html body.admin-layout .message,
+    html body.admin-layout .success {
+        background: var(--final-surface-2) !important;
+        background-color: var(--final-surface-2) !important;
+        color: #ffffff !important;
+        border-color: var(--final-border) !important;
+        box-shadow: 0 12px 32px rgba(0,0,0,.20) !important;
+    }
+
+    html body.admin-layout .panel-header,
+    html body.admin-layout .panel-footer,
+    html body.admin-layout .card-header,
+    html body.admin-layout .card-footer,
+    html body.admin-layout .chart-header,
+    html body.admin-layout .table-header,
+    html body.admin-layout .filter-header {
+        background: var(--final-surface-2) !important;
+        background-color: var(--final-surface-2) !important;
+        color: #ffffff !important;
+        border-color: var(--final-border) !important;
+    }
+
+    /* Any direct form card created by admin_shell */
+    html body.admin-layout > .container > form:not(.search-form):not(.filter-form):not(.inline-form),
+    html body.admin-layout .panel form:not(.inline-form) {
+        background: transparent !important;
+        background-color: transparent !important;
+        color: #ffffff !important;
+        border-color: var(--final-border) !important;
+    }
+
+    /* Inputs */
+    html body.admin-layout input,
+    html body.admin-layout select,
+    html body.admin-layout textarea,
+    html body.admin-layout .form-control {
+        background: var(--final-surface) !important;
+        background-color: var(--final-surface) !important;
+        color: #ffffff !important;
+        border-color: var(--final-border-strong) !important;
+    }
+
+    html body.admin-layout input::placeholder,
+    html body.admin-layout textarea::placeholder {
+        color: #959ab8 !important;
+    }
+
+    html body.admin-layout input:focus,
+    html body.admin-layout select:focus,
+    html body.admin-layout textarea:focus {
+        background: var(--final-hover) !important;
+        background-color: var(--final-hover) !important;
+        color: #ffffff !important;
+        border-color: rgba(93,240,157,.55) !important;
+        box-shadow: 0 0 0 3px rgba(93,240,157,.10) !important;
+    }
+
+    html body.admin-layout input[type="date"] {
+        color-scheme: dark;
+    }
+
+    html body.admin-layout option {
+        background: var(--final-surface) !important;
+        color: #ffffff !important;
+    }
+
+    /* Tables - override admin_shell's white !important rules */
+    html body.admin-layout table,
+    html body.admin-layout .panel table,
+    html body.admin-layout .table-responsive,
+    html body.admin-layout .table-wrap,
+    html body.admin-layout > .container > table {
+        background: var(--final-surface) !important;
+        background-color: var(--final-surface) !important;
+        color: #ffffff !important;
+        border-color: var(--final-border) !important;
+    }
+
+    html body.admin-layout thead,
+    html body.admin-layout thead tr,
+    html body.admin-layout th {
+        background: var(--final-surface-2) !important;
+        background-color: var(--final-surface-2) !important;
+        color: #dfe2f2 !important;
+        border-color: var(--final-border) !important;
+    }
+
+    html body.admin-layout tbody,
+    html body.admin-layout tbody tr,
+    html body.admin-layout tbody td,
+    html body.admin-layout tfoot,
+    html body.admin-layout tfoot tr,
+    html body.admin-layout tfoot td {
+        background: var(--final-surface) !important;
+        background-color: var(--final-surface) !important;
+        color: #ffffff !important;
+        border-color: rgba(255,255,255,.075) !important;
+    }
+
+    html body.admin-layout tbody tr:nth-child(even),
+    html body.admin-layout tbody tr:nth-child(even) td {
+        background: #23233b !important;
+        background-color: #23233b !important;
+    }
+
+    html body.admin-layout tbody tr:hover,
+    html body.admin-layout tbody tr:hover td {
+        background: var(--final-hover) !important;
+        background-color: var(--final-hover) !important;
+    }
+
+    html body.admin-layout td.empty,
+    html body.admin-layout .empty {
+        background: var(--final-surface) !important;
+        background-color: var(--final-surface) !important;
+        color: var(--final-muted) !important;
+    }
+
+    /* Buttons that used to be white */
+    html body.admin-layout .back,
+    html body.admin-layout .back-btn,
+    html body.admin-layout .back-button,
+    html body.admin-layout .cancel,
+    html body.admin-layout .clear,
+    html body.admin-layout .clear-button,
+    html body.admin-layout .action-btn,
+    html body.admin-layout .action-button,
+    html body.admin-layout .view-btn,
+    html body.admin-layout .view-button,
+    html body.admin-layout .receipt-button,
+    html body.admin-layout .edit,
+    html body.admin-layout .delete,
+    html body.admin-layout .remove,
+    html body.admin-layout .print-btn,
+    html body.admin-layout .mobile-menu-btn,
+    html body.admin-layout .admin-sidebar-toggle {
+        background: var(--final-surface) !important;
+        background-color: var(--final-surface) !important;
+        color: #ffffff !important;
+        border: 1px solid var(--final-border-strong) !important;
+    }
+
+    html body.admin-layout .back:hover,
+    html body.admin-layout .back-btn:hover,
+    html body.admin-layout .back-button:hover,
+    html body.admin-layout .cancel:hover,
+    html body.admin-layout .clear:hover,
+    html body.admin-layout .clear-button:hover,
+    html body.admin-layout .action-btn:hover,
+    html body.admin-layout .action-button:hover,
+    html body.admin-layout .view-btn:hover,
+    html body.admin-layout .view-button:hover,
+    html body.admin-layout .receipt-button:hover,
+    html body.admin-layout .edit:hover,
+    html body.admin-layout .delete:hover,
+    html body.admin-layout .remove:hover,
+    html body.admin-layout .print-btn:hover,
+    html body.admin-layout .admin-sidebar-toggle:hover {
+        background: linear-gradient(135deg, rgba(192,108,235,.28), rgba(93,240,157,.18), #202036) !important;
+        color: #ffffff !important;
+        border-color: rgba(255,255,255,.20) !important;
+    }
+
+    /* Primary buttons stay aurora/dark, never white on hover */
+    html body.admin-layout .filter-btn,
+    html body.admin-layout .filter-button,
+    html body.admin-layout .add-btn,
+    html body.admin-layout .add-button,
+    html body.admin-layout .save,
+    html body.admin-layout .complete,
+    html body.admin-layout button[type="submit"]:not(.toggle-password) {
+        background: linear-gradient(135deg, #c06ceb, #5df09d) !important;
+        color: #151629 !important;
+        border-color: transparent !important;
+    }
+
+    html body.admin-layout .filter-btn:hover,
+    html body.admin-layout .filter-button:hover,
+    html body.admin-layout .add-btn:hover,
+    html body.admin-layout .add-button:hover,
+    html body.admin-layout .save:hover,
+    html body.admin-layout .complete:hover,
+    html body.admin-layout button[type="submit"]:not(.toggle-password):hover {
+        background: linear-gradient(135deg, #cf82ef, #72f5ac) !important;
+        color: #111426 !important;
+    }
+
+    /* Sidebar white icon/avatar blocks */
+    html body.admin-layout .admin-sidebar-brand-icon,
+    html body.admin-layout .admin-sidebar-avatar {
+        background: var(--final-surface) !important;
+        background-color: var(--final-surface) !important;
+        color: #ffffff !important;
+        border: 1px solid var(--final-border-strong) !important;
+    }
+
+    html body.admin-layout .admin-sidebar-brand-icon img,
+    html body.admin-layout .admin-sidebar-avatar img,
+    html body.admin-layout .admin-sidebar-toggle img,
+    html body.admin-layout .action-button img,
+    html body.admin-layout .view-button img,
+    html body.admin-layout .receipt-button img {
+        filter: brightness(0) invert(1) !important;
+    }
+
+    html body.admin-layout .admin-sidebar-link.active {
+        background: linear-gradient(135deg, rgba(192,108,235,.28), rgba(93,240,157,.18), #202036) !important;
+        color: #ffffff !important;
+        border-color: var(--final-border-strong) !important;
+    }
+
+    html body.admin-layout .admin-sidebar-link.active img {
+        filter: brightness(0) invert(1) !important;
+    }
+}
+
+/* Printing remains paper-like and readable. */
+@media print {
+    html body.admin-layout .panel,
+    html body.admin-layout .card,
+    html body.admin-layout .today,
+    html body.admin-layout .filter-box,
+    html body.admin-layout .filter-panel,
+    html body.admin-layout .search-box,
+    html body.admin-layout table,
+    html body.admin-layout thead,
+    html body.admin-layout th,
+    html body.admin-layout tbody,
+    html body.admin-layout tr,
+    html body.admin-layout td,
+    html body.admin-layout tfoot,
+    html body.admin-layout input,
+    html body.admin-layout select,
+    html body.admin-layout textarea {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #111111 !important;
+    }
+}
